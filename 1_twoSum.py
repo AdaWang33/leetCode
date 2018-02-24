@@ -8,6 +8,12 @@ class Solution(object):
         """
         
         """
+        【思路】：
+        1.暴力两层循环
+        2.一个循环，然后看用target减之后，数列里有没有（better）
+        【知识点】：
+        列表生成器
+
         l = len(nums)
         # 用列表生成器来做，非常省力
         return [[x, y] for x in xrange(l) for y in xrange(x,l) if nums[x] + nums[y] == target and x != y][0]

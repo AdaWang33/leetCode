@@ -4,6 +4,14 @@
 #         self.val = x
 #         self.next = None
 
+"""
+【思路】：
+1.逐位相加，注意进位问题
+
+【知识点】：
+1.linked list
+2.最后return是从header开始，让list node的更新清晰简单
+"""
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
         """
