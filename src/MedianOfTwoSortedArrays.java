@@ -46,10 +46,10 @@ class MedianOfTwoSortedArrays {
 
     public double findByIndex(int[] A, int startOfA, int[] B, int startOfB, int index) {
         //边界条件here
-        if (startOfA > A.length) {
+        if (startOfA == A.length) {
             return B[startOfB + index - 1];
         }
-        if (startOfB > B.length) {
+        if (startOfB == B.length) {
             return A[startOfA + index - 1];
         }
 
