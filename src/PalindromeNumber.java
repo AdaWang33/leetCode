@@ -20,27 +20,43 @@
  * Coud you solve it without converting the integer to a string?
  */
 
+//public class PalindromeNumber {
+//    public boolean isPalindrome(int x) {
+//        String s = Integer.toString(x);
+//        s = preprocess(s);
+//        int center = s.length() / 2;
+//        for(int rl = center;rl>0;rl--){
+//            if(s.charAt(center+rl)!=s.charAt(center-rl)){
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    private String preprocess(String str) {
+//        StringBuilder result = new StringBuilder();
+//        result.append('#');
+//        for (int i = 0; i < str.length(); i++) {
+//            result.append(str.charAt(i));
+//            result.append('#');
+//        }
+//        return result.toString();
+//    }
+//}
+
 public class PalindromeNumber {
     public boolean isPalindrome(int x) {
-        String s = Integer.toString(x);
-        s = preprocess(s);
-        int center = s.length() / 2;
-        for(int rl = center;rl>0;rl--){
-            if(s.charAt(center+rl)!=s.charAt(center-rl)){
-                return false;
-            }
+        if (x < 0) return false;
+        if (x == 0) return true;
+        int rx = 0;
+        int tx = x;
+        while (tx > 0) {
+            rx = 10 * rx + tx % 10;
+            tx /= 10;
         }
-
-        return true;
-    }
-
-    private String preprocess(String str) {
-        StringBuilder result = new StringBuilder();
-        result.append('#');
-        for (int i = 0; i < str.length(); i++) {
-            result.append(str.charAt(i));
-            result.append('#');
-        }
-        return result.toString();
+        if (rx == x) return true;
+        return false;
     }
 }
+
