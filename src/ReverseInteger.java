@@ -1,16 +1,16 @@
 /**
  * Given a 32-bit signed integer, reverse digits of an integer.
- *
+ * <p>
  * Example 1:
- *
+ * <p>
  * Input: 123
  * Output: 321
  * Example 2:
- *
+ * <p>
  * Input: -123
  * Output: -321
  * Example 3:
- *
+ * <p>
  * Input: 120
  * Output: 21
  * Note:
@@ -22,32 +22,46 @@
  * when the reversed integer overflows.
  */
 
+//public class ReverseInteger {
+//    public int reverse(int x) {
+//        String s = Integer.toString(x);
+//        StringBuilder result = new StringBuilder();
+//        Boolean neg = false;
+//        if (s.charAt(0) == '-') {
+//            neg = true;
+//            StringBuilder us = new StringBuilder();
+//            for (int i = 1; i < s.length(); i++) {
+//                us.append(s.charAt(i));
+//            }
+//            s = us.toString();
+//        }
+//        for(int i =s.length()-1;i>-1;i--){
+//            if(s.charAt(s.length()-1)==0)continue;
+//            result.append(s.charAt(i));
+//        }
+//        String re_result = result.toString();
+//        int reversed = 0;
+//        try {
+//            reversed  = Integer.parseInt(re_result);
+//        }
+//        catch (NumberFormatException e)
+//        {
+//            reversed  = 0;
+//        }
+//        if(neg) return -reversed; else return reversed;
+//    }
+//}
+
+
 public class ReverseInteger {
     public int reverse(int x) {
-        String s = Integer.toString(x);
-        StringBuilder result = new StringBuilder();
-        Boolean neg = false;
-        if (s.charAt(0) == '-') {
-            neg = true;
-            StringBuilder us = new StringBuilder();
-            for (int i = 1; i < s.length(); i++) {
-                us.append(s.charAt(i));
-            }
-            s = us.toString();
-        }
-        for(int i =s.length()-1;i>-1;i--){
-            if(s.charAt(s.length()-1)==0)continue;
-            result.append(s.charAt(i));
-        }
-        String re_result = result.toString();
-        int reversed = 0;
+        String ans = x > 0 ? new StringBuilder(String.valueOf(-x)).append('-').reverse().toString()
+                : new StringBuilder(String.valueOf(x)).reverse().toString();
         try {
-            reversed  = Integer.parseInt(re_result);
+            return Integer.parseInt(ans);
+        } catch (Exception e) {
+            return 0;
         }
-        catch (NumberFormatException e)
-        {
-            reversed  = 0;
-        }
-        if(neg) return -reversed; else return reversed;
     }
+
 }
