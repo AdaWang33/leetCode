@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,29 +23,45 @@ import java.util.List;
 
 public class _4Sum {
     public List<List<Integer>> fourSum(int[] nums, int target) {
+        // 接着用两个循环加上两个指针，循环比递归效率高
+        Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        List<Integer> temp = new ArrayList<>();
+        if (nums.length < 4) return ans;
 
-        int i = 0;
-        int sum = 0;
-        calculate(nums, i, sum, target, temp, ans);
+        for (int i = 0; i < nums.length - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] + 3 * nums[nums.length - 1] < target) continue;
+            if (4 * nums[i] > target) break;
+
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                if (nums[i] + nums[j] + 2 * nums[nums.length - 1] < target) continue;
+                if (nums[i] + 3 * nums[j] > target) break;
+
+                int left = j + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum < target) {
+                        left++;
+                    } else if (sum > target) {
+                        right--;
+                    } else {
+                        if(left == j+1 || nums[left]!=nums[left-1]) {
+                            List<Integer> temp = new ArrayList<Integer>(4);
+                            temp.add(nums[i]);
+                            temp.add(nums[j]);
+                            temp.add(nums[left]);
+                            temp.add(nums[right]);
+                            ans.add(temp);
+                        }
+                        left++;
+                        right--;
+                    }
+                }
+            }
+        }
         return ans;
 
-    }
-
-    private void calculate(int[] nums, int i, int sum, int target, List<Integer> temp, List<List<Integer>> ans) {
-
-        if (temp.size() == 4) {
-            if (sum == target) ans.add(temp);
-            sum = 0;
-            return;
-        }
-        while (i < nums.length - 1) {
-
-            temp.add(nums[i]);
-            sum += nums[i];
-            calculate(nums, i + 1, sum, target, temp, ans);
-
-        }
     }
 }
