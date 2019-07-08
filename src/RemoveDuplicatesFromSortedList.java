@@ -27,23 +27,14 @@ import java.util.List;
 public class RemoveDuplicatesFromSortedList {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) return head;
-
-        ListNode prev = head;
-        ListNode cur = head.next;
-        List<Integer> num = new ArrayList<>();
-        num.add(head.val);
-
-        while (cur != null) {
-            if(num.contains(cur.val)){
-                prev.next = cur.next;
-                cur = cur.next;
-            }else{
-                num.add(cur.val);
-                prev = cur;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
+                cur.next = cur.next.next;
+            } else {
                 cur = cur.next;
             }
         }
-
         return head;
     }
 }
