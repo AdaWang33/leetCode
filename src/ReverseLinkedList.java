@@ -15,5 +15,13 @@ public class ReverseLinkedList {
         }
         head.next = null;
         return prev;
+
+
+        // recursively
+        if (head == null || head.next == null) return head;
+        ListNode back = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return back;
     }
 }
