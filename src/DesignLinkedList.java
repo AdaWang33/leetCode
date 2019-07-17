@@ -86,7 +86,6 @@ public class DesignLinkedList {
         if (index > size) {
             return;
         }
-
         int cnt = 0;
         ListNode tmp = head;
         while (tmp != null) {
