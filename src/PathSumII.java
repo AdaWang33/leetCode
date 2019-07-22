@@ -29,6 +29,8 @@ import java.util.List;
 
 public class PathSumII {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        // Tree: Java参数传递中，分为值传递（基本数据类型）和引用传递（非基本数据类型）
+        // 前者，修改形参不影响实参，后者修改形参同时也修改实参
         List<List<Integer>> ans = new ArrayList<>();
         if (root == null) return ans;
         ArrayDeque<Integer> level = new ArrayDeque<>();
