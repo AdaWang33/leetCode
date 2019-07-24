@@ -23,7 +23,6 @@ import java.util.List;
 
 public class BinaryTreePaths {
     List<String> ans = new ArrayList<>();
-
     public List<String> binaryTreePaths(TreeNode root) {
         if (root == null) return ans;
         String level = new String();
