@@ -26,4 +26,5 @@ public class RedundantConnection {
         }
         return parent[idx];
     }
+
 }
