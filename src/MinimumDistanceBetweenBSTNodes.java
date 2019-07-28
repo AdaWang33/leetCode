@@ -3,14 +3,14 @@ public class MinimumDistanceBetweenBSTNodes {
     int MIN = Integer.MAX_VALUE;
 
     public int minDiffInBST(TreeNode root) {
-        findClosestGreater();
+        findClosestGreater(root);
         return MIN;
     }
 
     public void findClosestGreater(TreeNode root) {
         if (root == null) return;
         findClosestGreater(root.left);
-        if (prev == Integer.MAX_VALUE) {
+        if (prev != Integer.MAX_VALUE) {
             MIN = Math.min(MIN, root.val - prev);
         }
         prev = root.val;
