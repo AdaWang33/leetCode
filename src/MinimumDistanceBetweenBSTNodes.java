@@ -18,6 +18,7 @@ public class MinimumDistanceBetweenBSTNodes {
     }
 }
 
+
 /**
  * public int minDiffInBST(TreeNode root) {
  * int[] MIN = {Integer.MAX_VALUE};
