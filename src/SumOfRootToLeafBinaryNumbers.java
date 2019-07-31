@@ -6,7 +6,6 @@ public class SumOfRootToLeafBinaryNumbers {
         findSum(root, 0);
         return Sum;
     }
-
     public void findSum(TreeNode root, int sum) {
         sum = 2 * sum + root.val;
         if (root.left == null && root.right == null) {
