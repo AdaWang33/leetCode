@@ -6,11 +6,8 @@ public class VerifyPreorderSerializationOfABinaryTree {
 
         for (String ele : preorder.split(",")) {
             if (--slots < 0) return false;
-
             if (!ele.equals("#")) slots += 2;
         }
-        if (slots == 0) return true;
-        else return false;
-
+        return slots == 0;
     }
 }
