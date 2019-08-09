@@ -1,21 +1,18 @@
 import java.util.Stack;
 
 public class OnlineStockSpan {
-    Stack<Integer> prices, span;
+    Stack<int[]> span;
 
     public StockSpanner() {
-        prices = new Stack<>();
         span = new Stack<>();
     }
 
     public int next(int price) {
         int curSpan = 1;
-        while (!prices.isEmpty() && prices.peek() <= price) {
-            prices.pop();
-            curSpan += span.pop();
+        while (!span.isEmpty() && span.peek()[0] <= price) {
+            curSpan += span.pop()[1];
         }
-        prices.push(price);
-        span.push(curSpan);
+        span.push(new int[]{price, curSpan});
         return curSpan;
     }
 }
