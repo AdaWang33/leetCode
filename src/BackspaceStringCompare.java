@@ -7,7 +7,6 @@ public class BackspaceStringCompare {
         return s.equals(t);
 
     }
-
     public String processedString(String str) {
         Stack<Character> stk = new Stack<>();
         for (Character c : str.toCharArray()) {
