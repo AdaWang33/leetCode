@@ -11,6 +11,7 @@ public class SumOfSubarrayMinimums {
         Stack<int[]> right = new Stack<>();
         int[] leftCnt = new int[A.length];
         int[] rightCnt = new int[A.length];
+        int mod = (int) 1e9 + 7;
 
         for (int i = 0; i < A.length; i++) {
             int cnt = 1;
@@ -22,7 +23,7 @@ public class SumOfSubarrayMinimums {
         }
 
         for (int j = A.length - 1; j >= 0; j--) {
-            int cnt = 0;
+            int cnt = 1;
             while (!right.isEmpty() && right.peek()[0] >= A[j]) {
                 cnt += right.pop()[1];
             }
@@ -31,7 +32,7 @@ public class SumOfSubarrayMinimums {
         }
 
         for (int i = 0; i < A.length; i++) {
-            ans += A[i] * (leftCnt[i] * rightCnt[i]);
+            ans = (ans + A[i] * leftCnt[i] * rightCnt[i]) % mod;
         }
         return ans;
     }
