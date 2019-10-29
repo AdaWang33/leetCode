@@ -13,7 +13,7 @@ public class MinimumCostTreeFromLeafValues {
             stk.push(num);
         }
 
-        if (stk.size() >= 2) {
+        while (stk.size() > 2) {
             ans += stk.pop() * stk.peek();
         }
         return ans;
