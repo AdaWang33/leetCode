@@ -22,6 +22,7 @@ public class NumberOfClosedIslands {
         return cnt;
     }
 
+
     public void helper(boolean[] isClosed, int[][] grid, int i, int j, boolean[][] visited) {
         visited[i][j] = true;
         if (i == 0 || i == grid.length - 1 || j == 0 || j == grid[0].length - 1) isClosed[0] = false;
