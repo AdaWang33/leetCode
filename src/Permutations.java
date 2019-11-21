@@ -19,14 +19,35 @@ import java.util.List;
  */
 
 public class Permutations {
-    List<List<Integer>> res = new ArrayList<>();
+//    List<List<Integer>> res = new ArrayList<>();
+//
+//    public List<List<Integer>> permute(int[] nums) {
+//        generatePermutations(nums, new ArrayList<>());
+//        return res;
+//    }
+//
+//    public void generatePermutations(int[] nums, List<Integer> tmp) {
+//        if (tmp.size() == nums.length) {
+//            res.add(new ArrayList<>(tmp));
+//            return;
+//        }
+//        for (int num : nums) {
+//            if (tmp.contains(num)) continue;
+//            tmp.add(num);
+//            generatePermutations(nums, tmp);
+//            tmp.remove(tmp.size() - 1);
+//        }
+//    }
 
     public List<List<Integer>> permute(int[] nums) {
-        generatePermutations(nums, new ArrayList<>());
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums.length == 0) return res;
+
+        generatePermutation(res, new ArrayList<>(), nums);
         return res;
     }
 
-    public void generatePermutations(int[] nums, List<Integer> tmp) {
+    public void generatePermutation(List<List<Integer>> res, List<Integer> tmp, int[] nums) {
         if (tmp.size() == nums.length) {
             res.add(new ArrayList<>(tmp));
             return;
@@ -34,7 +55,7 @@ public class Permutations {
         for (int num : nums) {
             if (tmp.contains(num)) continue;
             tmp.add(num);
-            generatePermutations(nums, tmp);
+            generatePermutation(res, tmp, nums);
             tmp.remove(tmp.size() - 1);
         }
     }
