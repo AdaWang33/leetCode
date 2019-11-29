@@ -19,6 +19,7 @@
 
 public class HouseRobber {
     public int rob(int[] nums) {
+        if (nums.length == 0) return 0;
         int[] rob = new int[nums.length]; // max money we can get if we rob this house
         int[] notRob = new int[nums.length]; // max money we can get if we don't rob this house
         rob[0] = nums[0];
