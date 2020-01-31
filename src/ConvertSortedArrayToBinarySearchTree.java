@@ -19,7 +19,6 @@
 public class ConvertSortedArrayToBinarySearchTree {
     public TreeNode sortedArrayToBST(int[] nums) {
         // 分两种情况：奇数最方便，偶数的话拱上去 -- 错误
-        // 还是dp的思想
 
         if (nums.length == 0) return null;
         return sortedArrayToBST(nums, 0, nums.length - 1);
