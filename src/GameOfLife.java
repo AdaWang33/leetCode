@@ -18,10 +18,10 @@ public class GameOfLife {
                 right++;
                 up++;
                 down++;
-                left = left>=0?left:0;
-                right=right<=neighors[0].length?right:neighors[0].length;
-                up = up>=0?up:0;
-                down = down<=neighors.length?down:neighors.length;
+                left = Math.max(left, 0);
+                right= Math.min(right, neighors[0].length);
+                up = Math.max(up, 0);
+                down = Math.min(down, neighors.length);
                 neighors[i][j] = sum[down][right]-sum[down][left]-sum[up][right]+sum[up][left]-board[i][j];
                 // System.out.println(neighors[i][j]);
             }
