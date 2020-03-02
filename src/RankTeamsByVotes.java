@@ -2,37 +2,40 @@ import java.util.*;
 
 public class RankTeamsByVotes {
     public String rankTeams(String[] votes) {
-        if(votes.length==1) return votes[0];
-        Map<Character, List<Integer>> map = new HashMap<>();
+        // priority queue: max heapify: O(nlogn), poll() && offer(): O(logn)
+        // you can't use premitives with comparator
+        if (votes.length == 1) return votes[0];
+        Map<Character, int[]> map = new HashMap<>();
 
-        String res = "";
-        PriorityQueue<Character> pq = new PriorityQueue<>((a, b)->{
-            List<Integer> alist = map.get(a);
-            List<Integer> blist = map.get(b);
-            for(int i=0;i<alist.size();i++){
-                if(alist.get(i)!=blist.get(i)) return alist.get(i)-blist.get(i);
+//        PriorityQueue<Character> pq = new PriorityQueue<>((a, b) -> {
+//            int[] alist = map.get(a);
+//            int[] blist = map.get(b);
+//            for (int i = 0; i < alist.length; i++) {
+//                if (alist[i] != blist[i]) return blist[i] - alist[i];
+//            }
+//            return a - b;
+//        });
+
+        for (String vote : votes) {
+            char[] chars = vote.toCharArray();
+            for (int i = 0; i < chars.length; i++) {
+                map.putIfAbsent(chars[i], new int[chars.length]);
+                map.get(chars[i])[i]++;
             }
-            return a-b;
+        }
+
+        List<Character> list = new ArrayList<>(map.keySet());
+        Collections.sort(list, (a, b) -> {
+            int[] alist = map.get(a);
+            int[] blist = map.get(b);
+            for (int i = 0; i < alist.length; i++) {
+                if (alist[i] != blist[i]) return blist[i] - alist[i];
+            }
+            return Character.compare(a, b);
         });
 
-        for(String vote:votes){
-            char[] chars = vote.toCharArray();
-            for(int i=0;i<chars.length;i++){
-                List<Integer> list = map.getOrDefault(chars[i], new ArrayList<>());
-                list.add(i);
-                Collections.sort(list);
-                map.put(chars[i], list);
-            }
-        }
-
-        for(char c:votes[0].toCharArray()){
-            pq.offer(c);
-        }
-
-        while(!pq.isEmpty()){
-            res+=pq.poll();
-        }
-
-        return res;
+        StringBuilder sb = new StringBuilder();
+        for (char c : list) sb.append(c);
+        return sb.toString();
     }
 }
