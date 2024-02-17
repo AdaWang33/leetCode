@@ -43,37 +43,85 @@
  */
 
 
-public class StringToInteger {
-    public int myAtoi(String str) {
-        // 去除空格
-        str = str.trim();
-        // 注意result的数据类型应该先是long！！
-        long result = 0;
-        int neg = 1;
-        Boolean overflow = false;
-        if (str.length() == 0 ) return 0;
+// public class StringToInteger {
+//     public int myAtoi(String str) {
+//         // 去除空格
+//         str = str.trim();
+//         // 注意result的数据类型应该先是long！！
+//         long result = 0;
+//         int neg = 1;
+//         Boolean overflow = false;
+//         if (str.length() == 0 ) return 0;
 
-        // 排除符号项的干扰
-        if (str.charAt(0) == '-' || str.charAt(0) == '+') {
-            if (str.charAt(0) == '-') neg = -1;
-            str = str.substring(1);
-        }
+//         // 排除符号项的干扰
+//         if (str.charAt(0) == '-' || str.charAt(0) == '+') {
+//             if (str.charAt(0) == '-') neg = -1;
+//             str = str.substring(1);
+//         }
 
 
-        for (int i = 0; i < str.length() && Character.isDigit(str.charAt(i)); i++) {
-            result = result * 10 + str.charAt(i) - '0';
-            // 这里判断防止溢出
-            if (result > Integer.MAX_VALUE) {
-                overflow = true;
+//         for (int i = 0; i < str.length() && Character.isDigit(str.charAt(i)); i++) {
+//             result = result * 10 + str.charAt(i) - '0';
+//             // 这里判断防止溢出
+//             if (result > Integer.MAX_VALUE) {
+//                 overflow = true;
+//                 break;
+//             }
+//         }
+//         if (overflow) {
+//             return neg == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+//         }
+// //        if (result * neg < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+// //        if (result * neg > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+//         return (int) result * neg;
+//     }
+// }
+
+
+class Solution {
+    public int myAtoi(String s) {
+        if (s.length()==0) return 0;
+
+        double res = 0;
+        boolean digitSeen = false;
+        boolean isPositive = true;
+        boolean signSeen = false;
+
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (c==' ') {
+                if(digitSeen || signSeen) {
+                    break;
+                } else {
+                    continue;
+                }
+            } else if(c=='+') {
+                if (digitSeen || signSeen) {
+                    break;
+                };
+                signSeen = true;
+            } else if(c=='-') {
+                if (digitSeen || signSeen) {
+                    break;
+                } else {
+                    isPositive = false;
+                    signSeen = true;
+                }
+            } else if(Character.isDigit(c)) {
+                res = res*10 + c-'0';
+                digitSeen = true;
+            } else {
                 break;
             }
         }
-        if (overflow) {
-            return neg == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-        }
-//        if (result * neg < Integer.MIN_VALUE) return Integer.MIN_VALUE;
-//        if (result * neg > Integer.MAX_VALUE) return Integer.MAX_VALUE;
-        return (int) result * neg;
+
+        res *= isPositive? 1: -1;
+        
+        res = Math.max(res, Integer.MIN_VALUE);
+        res = Math.min(res, Integer.MAX_VALUE);
+
+        return (int)res;
+        
     }
 }
-
