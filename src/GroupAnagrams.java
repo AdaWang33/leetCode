@@ -30,7 +30,7 @@ public class GroupAnagrams {
             int[] tmpArray = new int[26];
             for (char c : str.toCharArray()) {
                 tmpArray[c - 'a'] += 1;
-            }
+            } // smart way to identify strings belonging to same group
             String tmpKey = Arrays.toString(tmpArray);
             List<String> tmpValue = map.getOrDefault(tmpKey, new ArrayList<>());
             tmpValue.add(str);
@@ -38,5 +38,36 @@ public class GroupAnagrams {
         }
 
         return new ArrayList<>(map.values());
+
+
+
+
+
+        /*
+         * List<List<String>> res = new ArrayList<>();
+        HashMap<String, List> map = new HashMap<>();
+        for(int i=0;i<strs.length;i++) {
+            String str = strs[i];
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            str = new String(chars);
+
+            if(map.containsKey(str)) {
+                map.get(str).add(i);
+            } else {
+                List<Integer> cur = new ArrayList<>();
+                cur.add(i);
+                map.put(str, cur);
+            }
+        }
+
+        for(List<Integer> value : map.values()) {
+            List<String> curRes = new ArrayList<>();
+            value.stream().forEach(index-> curRes.add(strs[(int)index]));
+            res.add(curRes);
+        }
+
+        return res;
+         */
     }
 }
