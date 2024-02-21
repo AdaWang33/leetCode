@@ -31,13 +31,13 @@ public class GroupAnagrams {
             for (char c : str.toCharArray()) {
                 tmpArray[c - 'a'] += 1;
             } // smart way to identify strings belonging to same group
-            String tmpKey = Arrays.toString(tmpArray);
-            List<String> tmpValue = map.getOrDefault(tmpKey, new ArrayList<>());
+            String tmpKey = Arrays.toString(tmpArray); // smart way to turn into string
+            List<String> tmpValue = map.getOrDefault(tmpKey, new ArrayList<>()); // smart way to get or default
             tmpValue.add(str);
             map.put(tmpKey, tmpValue);
         }
 
-        return new ArrayList<>(map.values());
+        return new ArrayList<>(map.values()); // smart way to return final res!
 
 
 
