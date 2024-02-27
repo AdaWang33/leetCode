@@ -2,6 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SubarraySumEqualsK {
+    // array with order: two pointer, or slide window
+    // array w/o order: sums[i] (accumulative), or hashmap (especially sum)
     public int subarraySum(int[] nums, int k) {
         int cnt=0;
         Map<Integer,Integer> map = new HashMap<>();
