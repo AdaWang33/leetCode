@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
  * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
@@ -15,6 +17,29 @@
 
 public class ReorderList {
     public void reorderList(ListNode head) {
+        HashMap<Integer, ListNode> map = new HashMap<>();
+
+        ListNode cur = head;
+        int cnt = 0;
+        while(cur!=null) {
+            map.put(cnt++, cur);
+            cur = cur.next;
+        }
+
+        int left = 0;
+        int right = cnt-1;
+        while(left<right) {
+            ListNode leftNode = map.get(left);
+            ListNode rightNode = map.get(right);
+            ListNode prevNext = leftNode.next;
+            leftNode.next = rightNode;
+            rightNode.next = prevNext;
+            left++;
+            right--;
+        }
+        map.get(left).next = null;
+        
+        ////////
         if (head == null || head.next == null || head.next.next == null) return;
         // 先找到中间位置
         ListNode fast = head.next.next;
