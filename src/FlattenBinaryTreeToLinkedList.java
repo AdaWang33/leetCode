@@ -27,15 +27,23 @@ import java.util.Stack;
 
 public class FlattenBinaryTreeToLinkedList {
     public void flatten(TreeNode root) {
-        TreeNode cur = root;
-        TreeNode prev = null;
+        // animation here: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/solutions/1207642/js-python-java-c-simple-o-1-space-recursive-solutions-w-explanation
+        // Morris Traversal
 
-        while (cur != null) {
-            if (cur.left == null) cur = cur.right;
-            else {
-                prev = cur.left;
-                while (prev.right != null) prev = prev.right;
-                prev.right = cur.right;
+        if(root==null) return;
+
+        TreeNode cur = root;
+        TreeNode runner;
+
+        while(cur!=null) {
+            if (cur.left==null) {
+                cur = cur.right;
+            } else {
+                runner = cur.left;
+                while(runner.right!=null) {
+                    runner = runner.right;
+                }
+                runner.right = cur.right;
                 cur.right = cur.left;
                 cur.left = null;
             }
