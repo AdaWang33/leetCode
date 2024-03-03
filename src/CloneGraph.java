@@ -16,6 +16,7 @@ class Node {
 };
 
 public class CloneGraph {
+    // everytime we deep clone a graph/nodes, we use reversed hashMap (value -> node)
     HashMap<Integer, Node> map = new HashMap<>();
 
     public Node cloneGraph(Node node) {
