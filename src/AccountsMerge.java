@@ -25,44 +25,89 @@ import java.util.*;
 
 public class AccountsMerge {
     List<List<String>> res = new ArrayList<>();
-    Map<String, String> name = new HashMap<>();
-    Map<String, String> parent = new HashMap<>();
-    Map<String, Set<String>> union = new HashMap<>();
+    HashMap<String, String> name = new HashMap<>();
+    HashMap<String, String> parent = new HashMap<>();
+    HashMap<String, Set<String>> union = new HashMap<>();
 
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        for(List<String> account: accounts){
-            for(int i=1;i<account.size();i++){
+
+        // initialize
+        for (List<String> account : accounts) {
+            for (int i=1;i<account.size();i++) {
                 parent.put(account.get(i), account.get(i));
                 name.put(account.get(i), account.get(0));
             }
         }
 
-        for(List<String> account: accounts){
-            String par = findParent(account.get(1));
-            for(int i=2;i<account.size();i++){
-                parent.put(findParent(account.get(i)), par);
+        // do joining by parent (path compression)
+        for (List<String> account : accounts) {
+            String curPar = findParent(account.get(1));
+            for (int i=2;i<account.size();i++) {
+                parent.put(findParent(account.get(i)), curPar);
             }
         }
 
-        for(List<String> account: accounts){
-            String par = findParent(account.get(1));
-            for(int i=1;i<account.size();i++){
-                union.putIfAbsent(par, new HashSet<>());
-                union.get(par).add(account.get(i));
+        // iterate and form union by common parent
+        for (List<String> account : accounts) {
+            String curPar = findParent(account.get(1));
+            for(int i=1; i<account.size(); i++) {
+                Set<String> unionSet = union.getOrDefault(curPar, new HashSet<>());
+                unionSet.add(account.get(i));
+                union.put(curPar, unionSet);
             }
         }
 
-        for(String par:union.keySet()){
-            List<String> curUnion = new ArrayList<>(union.get(par));
-            Collections.sort(curUnion, (a,b)-> a.compareTo(b));
-            curUnion.add(0, name.get(par));
-            res.add(curUnion);
+        for (String key : union.keySet()) {
+            List<String> acc = new ArrayList<>(union.get(key));
+            Collections.sort(acc, (a,b)-> a.compareTo(b));
+            acc.add(0, name.get(key));
+            res.add(acc);
         }
-
         return res;
     }
 
-    public String findParent(String cur){
-        return parent.get(cur) == cur ? cur : findParent(parent.get(cur));
+    private String findParent(String str) {
+        return parent.get(str) == str ? str : findParent(parent.get(str));
     }
+    // List<List<String>> res = new ArrayList<>();
+    // Map<String, String> name = new HashMap<>();
+    // Map<String, String> parent = new HashMap<>();
+    // Map<String, Set<String>> union = new HashMap<>();
+
+    // public List<List<String>> accountsMerge(List<List<String>> accounts) {
+    //     for(List<String> account: accounts){
+    //         for(int i=1;i<account.size();i++){
+    //             parent.put(account.get(i), account.get(i));
+    //             name.put(account.get(i), account.get(0));
+    //         }
+    //     }
+
+    //     for(List<String> account: accounts){
+    //         String par = findParent(account.get(1));
+    //         for(int i=2;i<account.size();i++){
+    //             parent.put(findParent(account.get(i)), par);
+    //         }
+    //     }
+
+    //     for(List<String> account: accounts){
+    //         String par = findParent(account.get(1));
+    //         for(int i=1;i<account.size();i++){
+    //             union.putIfAbsent(par, new HashSet<>());
+    //             union.get(par).add(account.get(i));
+    //         }
+    //     }
+
+    //     for(String par:union.keySet()){
+    //         List<String> curUnion = new ArrayList<>(union.get(par));
+    //         Collections.sort(curUnion, (a,b)-> a.compareTo(b));
+    //         curUnion.add(0, name.get(par));
+    //         res.add(curUnion);
+    //     }
+
+    //     return res;
+    // }
+
+    // public String findParent(String cur){
+    //     return parent.get(cur) == cur ? cur : findParent(parent.get(cur));
+    // }
 }
