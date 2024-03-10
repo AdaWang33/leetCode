@@ -17,29 +17,34 @@ import java.util.List;
  */
 
 public class PermutationsII {
+    List<List<Integer>> res;
+    boolean[] visited;
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
+        res = new ArrayList<>();
         if (nums.length == 0) return res;
-
+        
         Arrays.sort(nums);
-        boolean[] used = new boolean[nums.length];
-        generatePermutationsWithDup(res, new ArrayList<>(), nums, used);
+        visited = new boolean[nums.length];
+        
+        helper(new ArrayList<>(), nums);
         return res;
     }
 
-    public void generatePermutationsWithDup(List<List<Integer>> res, List<Integer> tmp, int[] nums, boolean[] used) {
-        if (tmp.size() == nums.length) {
-            res.add(new ArrayList<>(tmp));
+    private void helper(List<Integer> temp, int[] nums) {
+        if (temp.size()==nums.length) {
+            res.add(new ArrayList<>(temp));
             return;
         }
 
-        for (int i = 0; i < nums.length; i++) {
-            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) continue;
-            used[i] = true;
-            tmp.add(nums[i]);
-            generatePermutationsWithDup(res, tmp, nums, used);
-            used[i] = false;
-            tmp.remove(tmp.size() - 1);
+        for(int i=0;i<nums.length;i++) {
+            if(visited[i] || (i>0 && nums[i]==nums[i-1] && !visited[i-1])) {
+                continue;
+            }
+            temp.add(nums[i]);
+            visited[i] = true;
+            helper(temp, nums);
+            temp.remove(temp.size()-1);
+            visited[i] = false;
         }
     }
 }
