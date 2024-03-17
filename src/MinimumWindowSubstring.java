@@ -1,6 +1,6 @@
 public class MinimumWindowSubstring {
     // https://leetcode.com/problems/minimum-window-substring/solutions/4677312/beats-100-users-c-java-python-javascript-explained
-
+    // https://leetcode.com/problems/minimum-window-substring/solutions/26808/here-is-a-10-line-template-that-can-solve-most-substring-problems
 
     /**
      * 76. Minimum Window Substring
