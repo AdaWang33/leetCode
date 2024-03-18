@@ -24,28 +24,54 @@ import java.util.Arrays;
 
 public class LongestSubstringWithoutRepeatingCharacters {
     public int lengthOfLongestSubstring(String s) {
-        int left = 0;
-        int right = 0;
-        int n = s.length();
-        int max = 0;
-        Boolean[] used = new Boolean[128];
-        Arrays.fill(used, Boolean.FALSE);   // always assign values
-        if (s.length() == 0 || s == null) return 0;
-            while (right < n) {
-                if (used[s.charAt(right)] == false) {
-                    used[s.charAt(right)] = true;
-                    right++;
-                } else {
-                    max = Math.max(max, right - left);
-                    while (left < right && s.charAt(left) != s.charAt(right)) {
-                        used[s.charAt(left)] = false;
-                        left++;
-                    }
-                    left++;
-                    right++;
+        if(s==null || s.length()==0) return 0;
+
+        int[] map = new int[128];
+        char[] sArray = s.toCharArray();
+        int curMax = Integer.MIN_VALUE;
+        int left=0, right=0, count=0;
+
+        while(right<s.length()) {
+            if(map[sArray[right++]]++ >0) {
+                count++;
+            }
+
+            while(count>0) {
+                if(map[sArray[left++]]-- ==2) {
+                    count--;
                 }
             }
-        max = Math.max(max, right - left);
-        return max;
+            curMax = Math.max(curMax, right-left);
+        }
+
+        return curMax;
     }
+
+
+
+    // public int lengthOfLongestSubstring(String s) {
+    //     int left = 0;
+    //     int right = 0;
+    //     int n = s.length();
+    //     int max = 0;
+    //     Boolean[] used = new Boolean[128];
+    //     Arrays.fill(used, Boolean.FALSE);   // always assign values
+    //     if (s.length() == 0 || s == null) return 0;
+    //         while (right < n) {
+    //             if (used[s.charAt(right)] == false) {
+    //                 used[s.charAt(right)] = true;
+    //                 right++;
+    //             } else {
+    //                 max = Math.max(max, right - left);
+    //                 while (left < right && s.charAt(left) != s.charAt(right)) {
+    //                     used[s.charAt(left)] = false;
+    //                     left++;
+    //                 }
+    //                 left++;
+    //                 right++;
+    //             }
+    //         }
+    //     max = Math.max(max, right - left);
+    //     return max;
+    // }
 }
