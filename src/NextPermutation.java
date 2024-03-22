@@ -5,7 +5,7 @@ public class NextPermutation {
         while (i >= 0 && nums[i] >= nums[i + 1]) i--; // find the one that breaks desc order
         if (i >= 0) {
             int j = nums.length - 1;
-            while (nums[j] <= nums[i]) j--;
+            while (nums[j] <= nums[i]) j--; // find the smallest one that is larger then breaker
             swap(nums, i, j);
         }
         reverOrder(nums, i + 1, nums.length - 1);
