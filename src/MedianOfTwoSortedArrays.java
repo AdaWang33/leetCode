@@ -1,4 +1,5 @@
 /**
+ * // 4 
  * There are two sorted arrays nums1 and nums2 of size m and n respectively.
  * <p>
  * Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
@@ -32,44 +33,88 @@ import java.util.Arrays;
  * 若B的小，则说明要求的数在A[0,m]和B[pb+1,n]之间，找第k-pa小的数，用递归进行计算
  */
 
+
+ // brutal force --> sort and find median with binary search
+ // two pointers
+ // partition & binary search
 class MedianOfTwoSortedArrays {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        // set down the index to look for, k starting from 1!!!
+        // fix relative length, so nums1 is always shorter
         int m = nums1.length;
         int n = nums2.length;
-        if ((m + n) % 2 == 1) {
-            return (findByIndex(nums1, 0, nums2, 0, (m + n) / 2 + 1));
-        } else {
-            return ((findByIndex(nums1, 0, nums2, 0, (m + n) / 2) + findByIndex(nums1, 0, nums2, 0, (m + n) / 2 + 1)) / 2.);
+        if(m>n) return findMedianSortedArrays(nums2, nums1);
+
+        // to find mid right point from nums1
+        int left = 0;
+        int right = m;
+        int totalPnts = (m+n+1)/2;
+
+        while(left<=right) {
+            int midR1 = (left+right)/2;
+            int midR2 = totalPnts-midR1;
+
+            if(midR1<right && nums1[midR1]<nums2[midR2-1]) { // mid too small
+                left = midR1+1;
+            } else if(midR1>left && nums2[midR2]<nums1[midR1-1]) { // mid too large
+                right = midR1-1;
+            } else { // right spot
+                int leftMax;
+                int rightMin;
+                if(midR1==0) leftMax=nums2[midR2-1];
+                else if(midR2==0) leftMax=nums1[midR1-1];
+                else leftMax = Math.max(nums1[midR1-1], nums2[midR2-1]);
+
+                if((m+n)%2==1) { // odd, take from left mid max
+                    return leftMax;
+                } else {
+                    if(midR1==m) rightMin = nums2[midR2];
+                    else if(midR2==n) rightMin = nums1[midR1];
+                    else rightMin = Math.min(nums1[midR1], nums2[midR2]);
+                }
+                return (leftMax+rightMin)/2.;
+            }
         }
+        return 0.; // won't reach here
+
     }
 
-    public double findByIndex(int[] A, int startOfA, int[] B, int startOfB, int index) {
-        //边界条件here
-        if (startOfA == A.length) {
-            return B[startOfB + index - 1];
-        }
-        if (startOfB == B.length) {
-            return A[startOfA + index - 1];
-        }
+//     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+//         // set down the index to look for, k starting from 1!!!
+//         int m = nums1.length;
+//         int n = nums2.length;
+//         if ((m + n) % 2 == 1) {
+//             return (findByIndex(nums1, 0, nums2, 0, (m + n) / 2 + 1));
+//         } else {
+//             return ((findByIndex(nums1, 0, nums2, 0, (m + n) / 2) + findByIndex(nums1, 0, nums2, 0, (m + n) / 2 + 1)) / 2.);
+//         }
+//     }
 
-        if (index == 1) {
-            return Math.min(A[startOfA], B[startOfB]);
-        }
+//     public double findByIndex(int[] A, int startOfA, int[] B, int startOfB, int index) {
+//         //边界条件here
+//         if (startOfA == A.length) {
+//             return B[startOfB + index - 1];
+//         }
+//         if (startOfB == B.length) {
+//             return A[startOfA + index - 1];
+//         }
 
-        //谁小谁有排除一半的权力
-        int halfKthOfA = startOfA + index / 2 - 1 < A.length
-                ? A[startOfA + index / 2 - 1]
-                : Integer.MAX_VALUE;
-        int halfKthofB = startOfB + index / 2 - 1 < B.length
-                ? B[startOfB + index / 2 - 1]
-                : Integer.MAX_VALUE;
-        if (halfKthOfA < halfKthofB) {
-            return findByIndex(A, startOfA + index / 2, B, startOfB, index - index / 2);
-        } else {
-            return findByIndex(A, startOfA, B, startOfB + index / 2, index - index / 2);
-        }
-    }
+//         if (index == 1) {
+//             return Math.min(A[startOfA], B[startOfB]);
+//         }
+
+//         //谁小谁有排除一半的权力
+//         int halfKthOfA = startOfA + index / 2 - 1 < A.length
+//                 ? A[startOfA + index / 2 - 1]
+//                 : Integer.MAX_VALUE;
+//         int halfKthofB = startOfB + index / 2 - 1 < B.length
+//                 ? B[startOfB + index / 2 - 1]
+//                 : Integer.MAX_VALUE;
+//         if (halfKthOfA < halfKthofB) {
+//             return findByIndex(A, startOfA + index / 2, B, startOfB, index - index / 2);
+//         } else {
+//             return findByIndex(A, startOfA, B, startOfB + index / 2, index - index / 2);
+//         }
+//     }
 
 }
 
